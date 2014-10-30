@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Formula:</b>
+  <%= @portion.formula_id %>
+</p>
+
+<p>
+  <b>Ingredient:</b>
+  <%= @portion.ingredient_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_portion_path(@portion) %> |
+<%= link_to 'Back', portions_path %>
