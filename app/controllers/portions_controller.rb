@@ -3,7 +3,7 @@ class PortionsController < ApplicationController
   # GET /portions.json
   def index
     @portions = Portion.where("formula_id like '%#{params[:formula_id]}%'")
-    @portions = Portion.where("ingredient_id like '%#{params[:ingredient_id]}%'") 
+    @portions = Portion.where("ingredient_id like '%#{params[:ingredient_id]}%'")
 
     respond_to do |format|
       format.html # index.html.erb
@@ -41,7 +41,7 @@ class PortionsController < ApplicationController
   # POST /portions
   # POST /portions.json
   def create
-    @portion = Portion.new(params[:portion])
+    @portion = Portion.new(portion_params)
 
     respond_to do |format|
       if @portion.save
@@ -60,7 +60,7 @@ class PortionsController < ApplicationController
     @portion = Portion.find(params[:id])
 
     respond_to do |format|
-      if @portion.update_attributes(params[:portion])
+      if @portion.update_attributes(portion_params)
         format.html { redirect_to @portion, notice: 'Portion was successfully updated.' }
         format.json { head :no_content }
       else
@@ -80,5 +80,10 @@ class PortionsController < ApplicationController
       format.html { redirect_to portions_url }
       format.json { head :no_content }
     end
+  end
+
+  private
+  def portion_params
+    params.require(:portion).permit(:formula_id, :ingredient_id)
   end
 end

@@ -46,7 +46,7 @@ class FormulasController < ApplicationController
   # POST /formulas
   # POST /formulas.json
   def create
-    @formula = Formula.new(params[:formula])
+    @formula = Formula.new(formula_params)
 
     respond_to do |format|
       if @formula.save
@@ -65,7 +65,7 @@ class FormulasController < ApplicationController
     @formula = Formula.find(params[:id])
 
     respond_to do |format|
-      if @formula.update_attributes(params[:formula])
+      if @formula.update_attributes(formula_params)
         format.html { redirect_to @formula, notice: 'Formula was successfully updated.' }
         format.json { head :no_content }
       else
@@ -86,5 +86,10 @@ class FormulasController < ApplicationController
       format.html { redirect_to formulas_url }
       format.json { head :no_content }
     end
+  end
+
+  private
+  def formula_params
+    params.require(:formula).permit(:nombre, :tiempo, :tipo, :descripcion, :id)
   end
 end
