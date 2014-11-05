@@ -1,10 +1,8 @@
 Recipe::Application.routes.draw do
-  
+  root :to => 'formulas#index'
+
   resources :portions
-
-
   resources :ingredients
-
   resources :formulas
 
 

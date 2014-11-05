@@ -20,6 +20,19 @@
   <%= @formula.descripcion %>
 </p>
 
+<p>
+  <b>Porciones:</b>
+
+  <ul>
+    <%- @formula.portions.each do |portion| %>
+      <li>
+        <span><%= portion.ingredient.nombre %></span>
+        <span>50gr</span>
+      </li>
+    <% end %>
+  </ul>
+</p>
+
 
 <%= link_to 'Edit', edit_formula_path(@formula) %> |
 <%= link_to 'Back', formulas_path %>

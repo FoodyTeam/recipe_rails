@@ -1,4 +1,10 @@
 <h1>Listing formulas</h1>
+<%= @ingredients %>
+
+<%= form_tag(formulas_path, :method => "get") do |f| %>
+  <%= select_tag(:ingredients, options_from_collection_for_select(Ingredient.all, "id", "nombre"), id: "ingredients-list", multiple: true, width: 200) %>
+  <%= submit_tag %>
+<% end %>
 
 <table>
   <tr>
@@ -6,6 +12,7 @@
     <th>Tiempo</th>
     <th>Tipo</th>
     <th>Descripcion</th>
+    <th>Porciones</th>
     <th></th>
     <th></th>
     <th></th>
@@ -17,6 +24,7 @@
     <td><%= formula.tiempo %></td>
     <td><%= formula.tipo %></td>
     <td><%= formula.descripcion %></td>
+    <!-- <td><%= formula.portions %></td> -->
     <td><%= link_to 'Show', formula %></td>
     <td><%= link_to 'Edit', edit_formula_path(formula) %></td>
     <td><%= link_to 'Destroy', formula, method: :delete, data: { confirm: 'Are you sure?' } %></td>

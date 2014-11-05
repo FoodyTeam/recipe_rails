@@ -1,4 +1,4 @@
-<%= form_for(@formula) do |f| %>
+<%= nested_form_for(@formula) do |f| %>
   <% if @formula.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@formula.errors.count, "error") %> prohibited this formula from being saved:</h2>
@@ -27,6 +27,11 @@
     <%= f.label :descripcion %><br />
     <%= f.text_field :descripcion %>
   </div>
+  <%= f.fields_for :portions do |portions_form| %>
+    <%= portions_form.collection_select :ingredient_id, Ingredient.order(:nombre), :id, :nombre, include_blank: true %>
+    <%= portions_form.link_to_remove "Remove this portion" %>
+  <% end %>
+  <p><%= f.link_to_add "Add a portion", :portions %></p>
   <div class="actions">
     <%= f.submit %>
   </div>

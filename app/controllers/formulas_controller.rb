@@ -2,9 +2,14 @@ class FormulasController < ApplicationController
   # GET /formulas
   # GET /formulas.json
   def index
-    @formulas = Formula.where("nombre like '%#{params[:nombre]}%'")
-    @formulas = Formula.where("tiempo like '%#{params[:tiempo]}%'")
-
+    if params[:ingredients]
+      ingredients_list = params[:ingredients]
+      @ingredients = Ingredient.find(ingredients_list)
+      portions = Portion.arel_table
+      @formulas = Formula.joins(:portions).merge(Portion.where(portions[:ingredient_id].in(ingredients_list))).uniq
+    else
+      @formulas = Formula.all
+    end
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @formulas }
