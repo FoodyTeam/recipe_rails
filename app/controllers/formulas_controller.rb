@@ -90,6 +90,6 @@ class FormulasController < ApplicationController
 
   private
   def formula_params
-    params.require(:formula).permit(:nombre, :tiempo, :tipo, :descripcion, :id)
+    params.require(:formula).permit(:nombre, :tiempo, :tipo, :descripcion, :id, portions_attributes: [:id, :ingredient_id, :_destroy])
   end
 end
