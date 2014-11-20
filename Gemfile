@@ -6,12 +6,14 @@ gem 'sass-rails', '~> 4.0.3'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
 gem 'jquery-rails'
-gem 'turbolinks'
+#gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
+
 gem "nested_form"
 gem "select2-rails"
 gem 'arel-helpers'
 gem "tzinfo-data"
+
 
 group :production do
   gem 'pg'
@@ -25,3 +27,8 @@ end
 group :doc do
   gem 'sdoc', '~> 0.4.0'
 end
+
+
+gem 'haml-rails'
+gem 'bootstrap-sass', '~> 3.3.0'
+gem 'paperclip'

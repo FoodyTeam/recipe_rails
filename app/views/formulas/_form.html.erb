@@ -1,4 +1,4 @@
-<%= nested_form_for(@formula) do |f| %>
+<%= nested_form_for(@formula, html: {class: "col-md-4"}) do |f| %>
   <% if @formula.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@formula.errors.count, "error") %> prohibited this formula from being saved:</h2>
@@ -11,21 +11,21 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :nombre %><br />
-    <%= f.text_field :nombre %>
+    <%= f.text_field :nombre, class: "form-control" %>
   </div>
-  <div class="field">
+  <div class="form-group">
     <%= f.label :tiempo %><br />
-    <%= f.text_field :tiempo %>
+    <%= f.text_field :tiempo, class: "form-control" %>
   </div>
-  <div class="field">
+  <div class="form-group">
     <%= f.label :tipo %><br />
-    <%= f.text_field :tipo %>
+    <%= f.text_field :tipo, class: "form-control" %>
   </div>
-  <div class="field">
+  <div class="form-group">
     <%= f.label :descripcion %><br />
-    <%= f.text_field :descripcion %>
+    <%= f.text_field :descripcion, class: "form-control" %>
   </div>
   <%= f.fields_for :portions do |portions_form| %>
     <%= portions_form.collection_select :ingredient_id, Ingredient.order(:nombre), :id, :nombre, include_blank: true %>

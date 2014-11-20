@@ -1,0 +1,28 @@
+%h1 Listing formulas
+= @ingredients
+
+%p Hola
+
+%table.table.table-striped
+  %tr
+    %th Nombre
+    %th Tiempo
+    %th Tipo
+    %th Descripcion
+    %th Porciones
+    %th
+    %th
+    %th
+
+
+  - @formulas.each do |formula|
+    %tr
+      %td= formula.nombre
+      %td= formula.tiempo
+      %td= formula.tipo
+      %td= formula.descripcion
+      %td= link_to 'Show', formula
+      %td= link_to 'Edit', edit_formula_path(formula)
+      %td= link_to 'Destroy', formula, method: :delete, data: { confirm: 'Are you sure?' }
+
+= link_to 'New Formula', new_formula_path, class: "btn btn-primary"
