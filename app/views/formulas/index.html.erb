@@ -1,10 +1,13 @@
 <h1>Listing formulas</h1>
 <%= @ingredients %>
 
-<%= form_tag(formulas_path, :method => "get") do |f| %>
+<%= form_tag(formulas_path, :method => "get" , :format =>".json") do |f| %>
   <%= select_tag(:ingredients, options_from_collection_for_select(Ingredient.all, "id", "nombre"), id: "ingredients-list", multiple: true, width: 200) %>
-  <%= submit_tag %>
+  <%= submit_tag (value = "Buscar") %>
 <% end %>
+
+
+
 
 <table>
   <tr>

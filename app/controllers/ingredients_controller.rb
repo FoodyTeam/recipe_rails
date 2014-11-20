@@ -6,8 +6,7 @@ class IngredientsController < ApplicationController
     @ingredients = Ingredient.where("nombre like '%#{params[:nombre]}%'")
 
     respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @ingredients }
+    format.html # index.html.erb
     end
   end
 

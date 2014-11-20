@@ -4,7 +4,7 @@ Recipe::Application.routes.draw do
   resources :portions
   resources :ingredients
   resources :formulas
-
+get '/formulas/only_with_ingredients/:ingredients', to: 'formulas#index'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -10,6 +10,8 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem "nested_form"
 gem "select2-rails"
+gem 'arel-helpers'
+gem "tzinfo-data"
 
 group :production do
   gem 'pg'

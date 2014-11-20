@@ -3,17 +3,15 @@ class FormulasController < ApplicationController
   # GET /formulas.json
   def index
     if params[:ingredients]
-      ingredients_list = params[:ingredients]
-      @ingredients = Ingredient.find(ingredients_list)
-      portions = Portion.arel_table
-      @formulas = Formula.joins(:portions).merge(Portion.where(portions[:ingredient_id].in(ingredients_list))).uniq
+      @formulas = formulas_only_with params[:ingredients]
     else
       @formulas = Formula.all
     end
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @formulas }
-    end
+      render json: @formulas
+  end
+
+  def formula_params
+    params.require(:formula).permit(:ingredients)
   end
 
   # GET /formulas/1
@@ -91,5 +89,33 @@ class FormulasController < ApplicationController
   private
   def formula_params
     params.require(:formula).permit(:nombre, :tiempo, :tipo, :descripcion, :id)
+  end
+
+  def formulas_only_with(search_ingredients)
+    # Turn the ingredients ids string intro integers.
+    search_ingredients = search_ingredients.split(',').map(&:to_i)
+
+    # Get the tables representation from the models and connect to them.
+    ingredients = Ingredient.arel_table; Ingredient.connection
+    portions    = Portion.arel_table;    Portion.connection
+    formulas    = Formula.arel_table;    Formula.connection
+
+    # Build the select_manager to get the ids of recipes with ingredients that
+    # are NOT wanted.
+   required = ingredients.project(formulas[:id]).
+   where(ingredients[:id].in search_ingredients)
+    required.join(portions).on(ingredients[:id].eq portions[:ingredient_id])
+    required.join(formulas).on(portions[:formula_id].eq formulas[:id]).distinct
+
+    # Get the recipes that don't appear in the group on non-wanted recipes
+    Formula.where(Formula[:id].in required)
+
+    unrequired = ingredients.project(formulas[:id])
+      .where(ingredients[:id].not_in search_ingredients)
+    unrequired.join(portions).on(ingredients[:id].eq portions[:ingredient_id])
+    unrequired.join(formulas).on(portions[:formula_id].eq formulas[:id]).distinct
+
+    # Get the recipes that don't appear in the group on non-wanted recipes
+    Formula.where(Formula[:id].not_in unrequired)
   end
 end
